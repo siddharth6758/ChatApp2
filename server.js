@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const user = {};
+// const user = {};
 
 const port = process.env.PORT || 3000;
 http.listen(port , ()=>{
@@ -20,10 +20,14 @@ const io = require('socket.io')(http)
 
 io.on('connection', (socket)=>{
     socket.on('user_join',(username)=>{
-        user[socket.id] = username;
+        // user[socket.id] = username;
         socket.broadcast.emit('new_user',username);
     })
     socket.on('message',(msg)=>{
         socket.broadcast.emit('Recieve_message', msg);
+    })
+
+    socket.on('disconnect',message=>{
+        socket.broadcast.emit('left', socket.id);
     })
 })
