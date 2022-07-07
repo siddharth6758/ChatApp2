@@ -44,7 +44,7 @@ function sendMessage(message){
         user : username,
         message : message.trim()
     }
-    mg.play();
+    // mg.play();
     appendMessage(msg,'outgoing');
     textarea.value = '';
     scroll();
@@ -62,6 +62,9 @@ function appendMessage(msg,type){
     `;
     newDiv.innerHTML = markup;
     messageArea.appendChild(newDiv);
+    if(type === 'incoming'){
+        mg.play();
+    }
 }
 
 socket.on('Recieve_message', (msg)=>{
